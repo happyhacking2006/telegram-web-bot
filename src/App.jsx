@@ -4,6 +4,7 @@ import { getData } from './constants/db'
 import Cart from './components/Cart/Cart'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { useCallback } from 'react'
 
 const cources = getData()
 
@@ -38,13 +39,25 @@ const App = () => {
     }else{
         const newData = cartItems.map(c => c.id === existItem.id ? {...existItem, quantity: existItem.quantity - 1} : c)
         setCartItems(newData)
+        
     }
+
   }
 
   const onCheckout = () => {
     telegram.MainButton.text = 'Sotib olish ;)'
     telegram.MainButton.show();
   }
+
+  const onSendData = useCallback(() => {
+    telegram.sendData(JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  useEffect(() => {
+    telegram.onEvent("mainButtonClicked", onSendData)
+
+    return () => telegram.onEvent("mainButtonClicked", onSendData) 
+  }, [onSendData])
 
   return (
     <>
