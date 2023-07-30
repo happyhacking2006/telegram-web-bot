@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useCallback } from 'react'
 
-const cources = getData()
+const courses = getData()
 
 const telegram = window.Telegram.WebApp;
 
@@ -64,7 +64,7 @@ const App = () => {
       <h1 className='heading'>Sammi kurslar</h1>
       <Cart cartItems={cartItems} onCheckout={onCheckout}/>
       <div className='cards__container'>
-          {cources.map(cource => (
+          {courses.map(cource => (
             
               <Card key={cource.id} cource={cource} onAddItem={onAddItem} onRemoveItem={onRemoveItem}/>
             
